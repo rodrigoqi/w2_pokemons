@@ -19,7 +19,34 @@
 
 <body>
 	<div class="container">
-		
+
+		<div class="row text-center">
+			<div class="col-md-12">
+
+				<?php
+				include "pokemon.php";
+
+				$p1 = new Pokemon(
+					"Arceus",
+					"Simplesmente o criador de tudo, Arceus é como um Deus no universo de Pokémon. Assim que ele nasceu, Arceus criou tudo a sua volta, como tempo e espaço, e deixou o “Trio da Criação” encarregado de cuidar disso. Curiosamente havia uma forma de capturar Arceus planejada para Pokémon Diamond & Pearl, porém a Nintendo nunca a lançou por achá-la complicada demais e apenas o distribuiu em raras ocasiões em eventos especiais.",
+					"arceus.jpg",
+					250,
+					50
+				);
+
+				$p1->setNome("Alceu");
+				$p1->setAtaque(350);
+
+				echo "<img src=img/" . $p1->getFoto() . "><br>";
+				echo $p1->__toString();
+				
+				?>
+
+
+			</div>
+		</div>
+
+
 	</div>
 </body>
 
