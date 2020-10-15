@@ -2,7 +2,7 @@
 
     class PokemonView{
 
-        public function gerarCard($pokemon){
+        public static function gerarCard($pokemon){
             $nomePokemon = $pokemon->getNome();
             $descricaoPokemon = $pokemon->getDescricao();
             $fotoPokemon = $pokemon->getFoto();
@@ -28,9 +28,5 @@
            ";
 
         }
-
-
     }
-
-
 ?>
