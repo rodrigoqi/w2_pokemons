@@ -18,6 +18,31 @@
 </head>
 
 <body>
+
+    <?php
+        include_once "pokemon.php";
+        include_once "pokemonDAO.php";
+
+
+        if(isset($_GET["botaoAcao"])){
+            if($_GET["botaoAcao"]=="Gravar"){
+                $pAux = new Pokemon(
+                    $_GET["nome"],
+                    $_GET["descricao"],
+                    "",
+                    $_GET["ataque"],
+                    $_GET["defesa"]
+                );
+                $pAux->setElemento($_GET["elemento"]);
+                PokemonDAO::inserir($pAux);
+            } else if($_GET["botaoAcao"]=="Excluir"){
+                PokemonDAO::excluir($_GET["nome"]);
+            }
+        }
+
+    ?>
+
+
     <div class="container">
         <div class="row text-center">
             <div class="col-md-12">
@@ -46,23 +71,23 @@
         <div class="row" id="areaCadastro">
             <div class="col-md-4 offset-md-4">
                 <strong><label for="nome">Nome</label></strong>
-                <input type="text" name="nome" value="">
+                <input type="text" name="nome" value= <?php if(isset($_GET["nome"])) echo $_GET["nome"]; else echo "''";   ?>   >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="descricao">Descrição</label></strong>
-                <input type="textarea" name="descricao" value="" id="descricao">
+                <input type="textarea" name="descricao" id="descricao" value= <?php if(isset($_GET["descricao"])) echo $_GET["descricao"]; else echo "''";   ?> >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="ataque">Pontos de ataque</label></strong>
-                <input type="text" name="ataque" value="">
+                <input type="text" name="ataque" value= <?php if(isset($_GET["ataque"])) echo $_GET["ataque"]; else echo "''";   ?> >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="defesa">Pontos de Defesa</label></strong>
-                <input type="text" name="defesa" value="">
+                <input type="text" name="defesa" value= <?php if(isset($_GET["defesa"])) echo $_GET["defesa"]; else echo "''";   ?> >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="elemento">Elemento</label></strong>
-                <input type="text" name="elemento" value="">
+                <input type="text" name="elemento" value= <?php if(isset($_GET["elemento"])) echo $_GET["elemento"]; else echo "''";   ?>>
             </div>
             <br>
 
