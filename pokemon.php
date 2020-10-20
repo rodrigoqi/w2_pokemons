@@ -1,6 +1,7 @@
 <?php
     class Pokemon{
         //PRIMEIRO: ATRIBUTOS (CARACTERISTICAS = VARIAVEIS)
+        private $codigo;
         private $nome;
         private $descricao;
         private $foto;
@@ -21,6 +22,10 @@
         }
 
         //GETTERS: métodos que devolvem o valor de um atributo
+        public function getCodigo(){
+            return $this->codigo;
+        }
+        
         public function getNome(){
             return $this->nome;
         }
