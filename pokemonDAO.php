@@ -52,16 +52,24 @@
 
         public static function atualizar($pokemon){
             $con = Conexao::getConexao();
-            $sql = $con->prepare("update pokemons set nome=?, descricao=?, 
-                ataque=?, defesa=?, elemento=?, foto=? where codigo=?");
-            
+
+            $codigo = $pokemon->getCodigo();
             $nome = $pokemon->getNome();
             $descricao = $pokemon->getDescricao();
             $ataque = $pokemon->getAtaque();
             $defesa = $pokemon->getDefesa();
             $elemento = $pokemon->getElemento();
             $foto = "";
-            $codigo = $pokemon->getCodigo();
+
+            if($codigo>0){
+                $sql = $con->prepare("update pokemons set nome=?, descricao=?, 
+                ataque=?, defesa=?, elemento=?, foto=? where codigo=?");
+                $sql->bindParam(7, $codigo);
+            } else {
+                $sql = $con->prepare("update pokemons set nome=?, descricao=?, 
+                ataque=?, defesa=?, elemento=?, foto=? where nome=?");
+                $sql->bindParam(7, $nome);
+            }
 
             $sql->bindParam(1, $nome);
             $sql->bindParam(2, $descricao);
@@ -69,7 +77,7 @@
             $sql->bindParam(4, $defesa);
             $sql->bindParam(5, $elemento);
             $sql->bindParam(6, $foto);
-            $sql->bindParam(7, $codigo);
+            
 
             $sql->execute();
             
@@ -135,6 +143,7 @@
 
             return $pokeLista;
         }
+
 
 
     }
