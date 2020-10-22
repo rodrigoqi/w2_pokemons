@@ -27,13 +27,15 @@
         if(isset($_GET["botaoAcao"])){
             if($_GET["botaoAcao"]=="Gravar"){
                 $pAux = new Pokemon(
+                    null,
                     $_GET["nome"],
                     $_GET["descricao"],
-                    "",
                     $_GET["ataque"],
-                    $_GET["defesa"]
+                    $_GET["defesa"],
+                    $_GET["elemento"],
+                    null
                 );
-                $pAux->setElemento($_GET["elemento"]);
+                
                 PokemonDAO::inserir($pAux);
             } else if($_GET["botaoAcao"]=="Excluir"){
                 PokemonDAO::excluir($_GET["nome"]);

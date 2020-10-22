@@ -12,13 +12,14 @@
         //SEGUNDO: MÉTODOS (AÇÕES = FUNCTIONS)
 
         //CONSTRUTOR: método que diz como um novo objeto da classe deve ser construido
-        public function __construct($nome, $descricao, $foto, $ataque, $defesa){
+        public function __construct($codigo, $nome, $descricao, $ataque, $defesa, $elemento, $foto){
+            $this->codigo = $codigo;
             $this->nome = $nome;
             $this->descricao = $descricao;
             $this->foto = $foto;
             $this->ataque = $ataque;
             $this->defesa = $defesa;
-            $this->elemento = "";
+            $this->elemento = $elemento;
         }
 
         //GETTERS: métodos que devolvem o valor de um atributo
