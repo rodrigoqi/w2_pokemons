@@ -24,6 +24,10 @@
         include_once "pokemonDAO.php";
 
         session_start();
+
+        if(!isset($_SESSION["modo"])){
+            $_SESSION["modo"] = 1;
+        }
         
         if(isset($_GET["botaoAcao"])){
             if($_GET["botaoAcao"]=="Gravar"){
