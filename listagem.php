@@ -19,10 +19,25 @@
 
 <body>
 
+    <?php
+        include_once "pokemonlista.php";
+        include_once "pokemonlistaview.php";
+        include_once "pokemon.php";
+        include_once "pokemonDAO.php";
+        
+
+        session_start();
+
+        $pokemons = PokemonDAO::getPokemons("codigo", "asc", "=", "17");
+
+    ?>
+
+
     <div class="container">
-        <div class="row text-center">
+        <div class="row text-center" id="cabecalhoLista">
             <div class="col-md-12">
                 <h1>Listagem de Pokemons</h1>
+                <br>
             </div>
         
             <div class="col-md-12 text-center">
@@ -32,7 +47,7 @@
                         <div class="col-md-1">
                             Filtro
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <input class="ajustavel" type="text" name="txtFiltro" value="">
                         </div>
                         <div class="col-md-2">
@@ -41,6 +56,16 @@
                                 <option value="defesa">Defesa</option>
                                 <option value="elemento">Elemento</option>
                                 <option value="nome">Nome</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="ajustavel" name="selOperacao">
+                                <option value="=">Igual</option>
+                                <option value="<>">Diferente</option>
+                                <option value=">">Maior</option>
+                                <option value=">=">Maior ou igual</option>
+                                <option value="<">Menor</option>
+                                <option value="<=">Menor ou igual</option>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -63,6 +88,13 @@
             </div>  
         </div> 
 
+    
+        <?php
+            PokeListaView::geraLista($pokemons);
+        ?>
+    
+    
+    
     </div>
 
 

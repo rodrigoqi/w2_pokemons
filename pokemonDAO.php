@@ -117,12 +117,16 @@
 
         }
 
-        public static function getPokemons($campo, $ordem){
+        public static function getPokemons($campo, $ordem, $operador, $valor){
             $con = Conexao::getConexao();
-            $sql = $con->prepare("select * from pokemons order by ? ?");
-            $sql->bindParam(1, $campo);
-            $sql->bindParam(2, $ordem);
-            
+
+            if($operador=="")
+                $sql = $con->prepare("select * from pokemons order by $campo $ordem");
+            else{
+                $sql = $con->prepare("select * from pokemons where 
+                                        $campo $operador ? order by $campo $ordem");
+                $sql->bindParam(1, $valor);
+            }
             $sql->setFetchMode(PDO::FETCH_ASSOC);
             $sql->execute();
 

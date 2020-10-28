@@ -5,7 +5,7 @@
         public static function geraLista($lista){
 
             echo "
-            <form action='listagem.php' method='get'>
+            <form action='cadastro.php' method='get'>
                 <div class='row' style='background-color:#555555; color:#FFFFFF;'>
                     <div class='col-md-1'>
 
@@ -34,7 +34,6 @@
                 </div>
             ";
 
-            
             $cont = 0;
 
             foreach($lista as $pokemon){
@@ -74,12 +73,12 @@
                             <div class='col-md-2' style='display:flex; align-items:center;'>
                                 $elemento
                             </div>
-                            <div class='col-md-1 semEspaco' style=''>
+                            <div class='col-md-1'>
                                 <button class='btn' type='submit' name='delPokemon' value= $codigo style='height:100%; background-color:transparent;'>
                                     <img src= 'img/delete.png' style='height:50%; width:50%;'>
                                 </button> 
                             </div>
-                            <div class='col-md-1 semEspaco' style=''>
+                            <div class='col-md-1'>
                                 <button class='btn' type='submit' name='selPokemon' value= $codigo style='height:100%; background-color:transparent;'>
                                     <img src= 'img/edit.png' style='height:50%; width:50%;'>
                                 </button> 

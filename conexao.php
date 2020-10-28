@@ -11,7 +11,7 @@
 
                 try{
                     self::$conexao = new PDO($stringConexao, $usuario, $senha);
-                    echo "Nova conexão criada com sucesso!<br>";
+                    
                 } catch(PDOException $e){
                     //posso mostrar mensagens personalizadas de erro
                     //1044: usuário
@@ -24,7 +24,6 @@
                 }
             }
 
-            echo "Conexao existente devolvida com sucesso!<br>";
             return self::$conexao;
         }
 
