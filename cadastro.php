@@ -72,8 +72,11 @@
             //Inserir ou Atualizar o Pokemon. Além disso, também conseguimos saber se
             //devemos recarregar os valores dos inputs ou trazer somente vazio
             if(isset($_GET["botaoAcao"])){
-                if($_GET["botaoAcao"]=="Excluir" || $_GET["botaoAcao"]=="Inserir"){
+                if($_GET["botaoAcao"]=="Excluir" || $_GET["botaoAcao"]=="Limpar"){
                     $_SESSION["modo"] = 1; //insercao
+                } 
+                else if($_GET["botaoAcao"]=="Cancelar"){
+                    header("Location: listagem.php");
                 } else {
                     $_SESSION["modo"] = 2; //atualização
                 }
@@ -89,6 +92,7 @@
             $ataque = $pokemon->getAtaque();
             $defesa = $pokemon->getDefesa();
             $elemento = $pokemon->getElemento();
+            $foto = $pokemon->getFoto();
         }
 
         
@@ -107,9 +111,6 @@
 
         <div class="row text-center">
             <div class="col-md-2 offset-md-2">
-                <input type="submit" name="botaoAcao" value="Inserir" class="btn btn-primary"/>
-            </div>
-            <div class="col-md-2">
                 <input type="submit" name="botaoAcao" value="Gravar" class="btn btn-success"/>
             </div>
             <div class="col-md-2">
@@ -118,17 +119,23 @@
             <div class="col-md-2">
                 <input type="submit" name="botaoAcao" value="Cancelar" class="btn btn-warning"/>
             </div>
+            <div class="col-md-2">
+                <input type="submit" name="botaoAcao" value="Limpar" class="btn btn-primary"/>
+            </div>
         </div>
 
         <br><br>
         <div class="row" id="areaCadastro">
+            <div class="col-md-4 offset-md-4">
+                <img src="img/<?php echo $foto;?>" style="width:100%; height:100%;">  
+            </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="nome">Nome</label></strong>
                 <input type="text" name="nome" value= <?php echo $nome; ?>   >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="descricao">Descrição</label></strong>
-                <input type="textarea" name="descricao" id="descricao" value= <?php echo $descricao; ?> >
+                <textarea rows="8" wrap="hard" style="width: 100%;"><?php echo $descricao;?></textarea> 
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="ataque">Pontos de ataque</label></strong>

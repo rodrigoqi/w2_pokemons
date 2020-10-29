@@ -25,10 +25,34 @@
         include_once "pokemon.php";
         include_once "pokemonDAO.php";
         
-
         session_start();
 
-        $pokemons = PokemonDAO::getPokemons("codigo", "asc", "=", "17");
+        $valor = "";
+        $campo = "";
+        $operacao = "";
+        $ordenacao = "";
+
+        if(isset($_GET["btnFiltro"])){
+            $valor = $_GET["txtFiltro"];
+            $campo = $_GET["selTipoFiltro"];
+            $operacao = $_GET["selOperacao"];
+            $ordenacao = $_GET["selOrdenacao"];
+
+            if($_GET["btnFiltro"]=="inserir"){
+                header("Location: cadastro.php");
+            } else if($_GET["btnFiltro"]=="desfazer"){
+                $pokemons = PokemonDAO::getPokemons("codigo", "asc", "", "");
+            } else if($_GET["btnFiltro"]=="filtrar"){
+                if($valor==""){
+                    $pokemons = PokemonDAO::getPokemons($campo, $ordenacao, "", "");
+                } else {
+                    $pokemons = PokemonDAO::getPokemons($campo, $ordenacao, $operacao, $valor);
+                }
+            }
+
+        } else {
+            $pokemons = PokemonDAO::getPokemons("codigo", "asc", "", "");
+        }
 
     ?>
 
@@ -48,10 +72,10 @@
                             Filtro
                         </div>
                         <div class="col-md-2">
-                            <input class="ajustavel" type="text" name="txtFiltro" value="">
+                            <input class="ajustavel" type="text" name="txtFiltro" id="txtFiltro" value="">
                         </div>
                         <div class="col-md-2">
-                            <select class="ajustavel" name="selTipoFiltro">
+                            <select class="ajustavel" name="selTipoFiltro" id="selTipoFiltro">
                                 <option value="ataque">Ataque</option>
                                 <option value="defesa">Defesa</option>
                                 <option value="elemento">Elemento</option>
@@ -59,7 +83,7 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select class="ajustavel" name="selOperacao">
+                            <select class="ajustavel" name="selOperacao" id="selOperacao">
                                 <option value="=">Igual</option>
                                 <option value="<>">Diferente</option>
                                 <option value=">">Maior</option>
@@ -69,9 +93,9 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select class="ajustavel" name="selOrdenacao">
-                                <option value="crescente">Crescente</option>
-                                <option value="decrescente">Decrescente</option>
+                            <select class="ajustavel" name="selOrdenacao" id="selOrdenacao">
+                                <option value="asc">Crescente</option>
+                                <option value="desc">Decrescente</option>
                             </select>
                         </div>
                         <div class="col-md-1">
@@ -91,6 +115,17 @@
     
         <?php
             PokeListaView::geraLista($pokemons);
+
+            if(isset($_GET["btnFiltro"])){
+                echo "
+                    <script>
+                        $('#txtFiltro').val('$valor');
+                        $('#selTipoFiltro').val('$campo');
+                        $('#selOperacao').val('$operacao');
+                        $('#selOrdenacao').val('$ordenacao');
+                    </script>
+                ";
+            }
         ?>
     
     
