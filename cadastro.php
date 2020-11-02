@@ -25,6 +25,14 @@
 
         session_start();
 
+        if(isset($_SESSION["logado"])){
+            if($_SESSION["logado"]==false){
+                header("Location: index.php");
+            }
+        } else {
+            header("Location: index.php");
+        }
+
         if(!isset($_SESSION["modo"])){
             $_SESSION["modo"] = 1;
         }
