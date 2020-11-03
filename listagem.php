@@ -41,17 +41,17 @@
         $operacao = "";
         $ordenacao = "";
 
-        if(isset($_GET["btnFiltro"])){
-            $valor = $_GET["txtFiltro"];
-            $campo = $_GET["selTipoFiltro"];
-            $operacao = $_GET["selOperacao"];
-            $ordenacao = $_GET["selOrdenacao"];
+        if(isset($_POST["btnFiltro"])){
+            $valor = $_POST["txtFiltro"];
+            $campo = $_POST["selTipoFiltro"];
+            $operacao = $_POST["selOperacao"];
+            $ordenacao = $_POST["selOrdenacao"];
 
-            if($_GET["btnFiltro"]=="inserir"){
+            if($_POST["btnFiltro"]=="inserir"){
                 header("Location: cadastro.php");
-            } else if($_GET["btnFiltro"]=="desfazer"){
+            } else if($_POST["btnFiltro"]=="desfazer"){
                 $pokemons = PokemonDAO::getPokemons("codigo", "asc", "", "");
-            } else if($_GET["btnFiltro"]=="filtrar"){
+            } else if($_POST["btnFiltro"]=="filtrar"){
                 if($valor==""){
                     $pokemons = PokemonDAO::getPokemons($campo, $ordenacao, "", "");
                 } else {
@@ -75,7 +75,7 @@
         
             <div class="col-md-12 text-center">
 
-                <form method="get" action="listagem.php">
+                <form method="post" action="listagem.php">
                     <div class="row">
                         <div class="col-md-1">
                             Filtro
@@ -125,7 +125,7 @@
         <?php
             PokeListaView::geraLista($pokemons);
 
-            if(isset($_GET["btnFiltro"])){
+            if(isset($_POST["btnFiltro"])){
                 echo "
                     <script>
                         $('#txtFiltro').val('$valor');

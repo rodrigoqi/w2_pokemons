@@ -5,7 +5,7 @@
         public static function geraLista($lista){
 
             echo "
-            <form action='cadastro.php' method='get'>
+            <form action='cadastro.php' method='post'>
                 <div class='row' style='background-color:#555555; color:#FFFFFF;'>
                     <div class='col-md-1'>
 
@@ -53,7 +53,7 @@
 
                     echo "
                         <div class='row' style='background-color: $cor; border: 1px solid #AAAAAA;'>
-                            <div class='col-md-1 semEspaco' style='padding-left: 0 !important; padding-right: 0 !important;'>
+                            <div class='col-md-1 semEspaco' style='padding-left: 0 !important; padding-right: 0 !important; height: 50px;'>
                                 <button class='btn' type='submit' name='selPokemon' value= $codigo style='height:100%; width:100%; padding:0px!important;'>
                                     <img src= 'img/$foto' style='height:100%; width:100%;'>
                                 </button> 

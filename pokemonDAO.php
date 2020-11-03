@@ -11,19 +11,21 @@
         public static function inserir($pokemon){
             $con = Conexao::getConexao();
             $sql = $con->
-                prepare("insert into pokemons values (null,?,?,?,?,?,null)");
+                prepare("insert into pokemons values (null,?,?,?,?,?,?)");
             
             $nome = $pokemon->getNome();
             $descricao = $pokemon->getDescricao();
             $ataque = $pokemon->getAtaque();
             $defesa = $pokemon->getDefesa();
             $elemento = $pokemon->getElemento();
+            $foto = $pokemon->getFoto();
             
             $sql->bindParam(1, $nome);
             $sql->bindParam(2, $descricao);
             $sql->bindParam(3, $ataque);
             $sql->bindParam(4, $defesa);
             $sql->bindParam(5, $elemento);
+            $sql->bindParam(6, $foto);
             
             $sql->execute();
         }
@@ -59,7 +61,7 @@
             $ataque = $pokemon->getAtaque();
             $defesa = $pokemon->getDefesa();
             $elemento = $pokemon->getElemento();
-            $foto = "";
+            $foto = $pokemon->getFoto();
 
             if($codigo>0){
                 $sql = $con->prepare("update pokemons set nome=?, descricao=?, 

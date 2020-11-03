@@ -29,7 +29,7 @@
 	$con = Conexao::getConexao();
 	
 	session_start();
-	session_cache_expire(10);
+	
 
 	$_SESSION["logado"] = false;
 
@@ -39,6 +39,7 @@
 
 		if(UsuarioDAO::logar($usuario, $senha)){
 			$_SESSION["logado"] = true;
+			session_cache_expire(10);
 			header("Location: listagem.php");
 		}
 

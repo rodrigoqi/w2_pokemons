@@ -22,6 +22,7 @@
     <?php
         include_once "pokemon.php";
         include_once "pokemonDAO.php";
+        include_once "imagem.php";
 
         session_start();
 
@@ -37,25 +38,29 @@
             $_SESSION["modo"] = 1;
         }
 
+
         $codigo = "";
         $nome = "";
         $descricao = "";
         $ataque = "";
         $defesa = "";
         $elemento = "";
-        $foto = "";
+        $foto = "semfoto.jpg";
 
         
-        if(isset($_GET["botaoAcao"])){
-            if($_GET["botaoAcao"]=="Gravar"){
+        if(isset($_POST["botaoAcao"])){
+            if($_POST["botaoAcao"]=="Gravar"){
                 $codigo = null;
-                $nome = $_GET["nome"];
-                $descricao = $_GET["descricao"];
-                $ataque = $_GET["ataque"];
-                $defesa = $_GET["defesa"];
-                $elemento = $_GET["elemento"];
-                $foto = null;
-                
+                $nome = $_POST["nome"];
+                $descricao = $_POST["descricao"];
+                $ataque = $_POST["ataque"];
+                $defesa = $_POST["defesa"];
+                $elemento = $_POST["elemento"];
+                $arquivo = $_FILES["fileFoto"];
+                if($arquivo!="" && $arquivo!=null)
+                    $foto = Imagem::uploadImagem($arquivo, 2000, 2000, 5000, "img/"); 
+                else
+                    $foto = "";
                 $pAux = new Pokemon(
                     $codigo,
                     $nome,
@@ -69,8 +74,8 @@
                     PokemonDAO::inserir($pAux);
                 else
                     PokemonDAO::atualizar($pAux);
-            } else if($_GET["botaoAcao"]=="Excluir"){
-                PokemonDAO::excluir($_GET["nome"]);
+            } else if($_POST["botaoAcao"]=="Excluir"){
+                PokemonDAO::excluir($_POST["nome"]);
             }
 
 
@@ -79,11 +84,11 @@
             //Assim, a próxima vez que o botão gravar for clicado, sabemos se devemos
             //Inserir ou Atualizar o Pokemon. Além disso, também conseguimos saber se
             //devemos recarregar os valores dos inputs ou trazer somente vazio
-            if(isset($_GET["botaoAcao"])){
-                if($_GET["botaoAcao"]=="Excluir" || $_GET["botaoAcao"]=="Limpar"){
+            if(isset($_POST["botaoAcao"])){
+                if($_POST["botaoAcao"]=="Excluir" || $_POST["botaoAcao"]=="Limpar"){
                     $_SESSION["modo"] = 1; //insercao
                 } 
-                else if($_GET["botaoAcao"]=="Cancelar"){
+                else if($_POST["botaoAcao"]=="Cancelar"){
                     header("Location: listagem.php");
                 } else {
                     $_SESSION["modo"] = 2; //atualização
@@ -93,17 +98,19 @@
 
         }
 
-        if(isset($_GET["selPokemon"])){
-            $pokemon = PokemonDAO::getPokemon($_GET["selPokemon"]);
+        if(isset($_POST["selPokemon"])){
+            $pokemon = PokemonDAO::getPokemon($_POST["selPokemon"]);
             $nome = $pokemon->getNome();
             $descricao = $pokemon->getDescricao();
             $ataque = $pokemon->getAtaque();
             $defesa = $pokemon->getDefesa();
             $elemento = $pokemon->getElemento();
             $foto = $pokemon->getFoto();
+            $_SESSION["modo"] = 2;
+        } else {
+            $_SESSION["modo"] = 1;
         }
 
-        
 
     ?>
 
@@ -115,7 +122,7 @@
             </div>
         </div>
 
-        <form method="get" action="cadastro.php">
+        <form method="post" action="cadastro.php" enctype="multipart/form-data">
 
         <div class="row text-center">
             <div class="col-md-2 offset-md-2">
@@ -138,24 +145,27 @@
                 <img src="img/<?php echo $foto;?>" style="width:100%; height:100%;">  
             </div>
             <div class="col-md-4 offset-md-4">
+                <input type="file" name="fileFoto">
+            </div>
+            <div class="col-md-4 offset-md-4">
                 <strong><label for="nome">Nome</label></strong>
-                <input type="text" name="nome" value= <?php echo $nome; ?>   >
+                <input type="text" name="nome" value= <?php echo "$nome"; ?>   >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="descricao">Descrição</label></strong>
-                <textarea rows="8" wrap="hard" style="width: 100%;"><?php echo $descricao;?></textarea> 
+                <textarea name="descricao" rows="8" wrap="hard" style="width: 100%;"><?php echo "$descricao";?></textarea> 
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="ataque">Pontos de ataque</label></strong>
-                <input type="text" name="ataque" value= <?php echo $ataque; ?> >
+                <input type="text" name="ataque" value= <?php echo "$ataque"; ?> >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="defesa">Pontos de Defesa</label></strong>
-                <input type="text" name="defesa" value= <?php echo $defesa; ?> >
+                <input type="text" name="defesa" value= <?php echo "$defesa"; ?> >
             </div>
             <div class="col-md-4 offset-md-4">
                 <strong><label for="elemento">Elemento</label></strong>
-                <input type="text" name="elemento" value= <?php echo $elemento; ?> >
+                <input type="text" name="elemento" value= <?php echo "$elemento"; ?> >
             </div>
             <br>
 
@@ -165,6 +175,8 @@
 
 
     </div>
+
+    <?php var_dump($_SESSION["modo"]); ?>
 
 
 </body>
